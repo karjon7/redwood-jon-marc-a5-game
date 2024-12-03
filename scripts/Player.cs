@@ -3,8 +3,12 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+    [ExportGroup("Rotation")]
+    [Export]
+    private int playerRotationSpeed = 15;
+
 	[ExportGroup("Movement")]
-	[Export]
+    [Export]
 	private int playerSpeed = 10;
 	[Export]
 	private int playerAccel = 15;
@@ -21,8 +25,16 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        LookAt(GetGlobalMousePosition());
+        HandleRotation(delta);
         HandleMovement(delta);
+    }
+
+    private void HandleRotation(double delta)
+    {
+        Vector2 directionToTarget = GlobalPosition.DirectionTo(GetGlobalMousePosition());
+        float targetAngle = directionToTarget.Angle();
+
+        GlobalRotation = Mathf.LerpAngle(GlobalRotation, targetAngle, playerRotationSpeed * (float)delta);
     }
 
     private void HandleMovement(double delta)

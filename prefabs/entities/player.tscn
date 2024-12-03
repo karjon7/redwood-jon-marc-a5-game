@@ -1,6 +1,11 @@
-[gd_scene format=3 uid="uid://cukoxugph2cxr"]
+[gd_scene load_steps=2 format=3 uid="uid://cukoxugph2cxr"]
+
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_i2by2"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_i2by2")
+playerSpeed = 500
+playerAccel = 10
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0, -16, -16)

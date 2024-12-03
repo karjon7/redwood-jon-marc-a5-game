@@ -4,7 +4,6 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	[ExportGroup("Movement")]
-
 	[Export]
 	private int playerSpeed = 10;
 	[Export]
@@ -22,6 +21,7 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        LookAt(GetGlobalMousePosition());
         HandleMovement(delta);
     }
 

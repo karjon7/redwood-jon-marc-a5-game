@@ -6,3 +6,6 @@
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_v1b1t")]
 position = Vector2(440, 304)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(128, 64, 320, 64, 320, 128, 192, 256, 128, 256)

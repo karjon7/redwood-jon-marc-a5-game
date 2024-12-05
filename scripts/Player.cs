@@ -7,6 +7,8 @@ public partial class Player : CharacterBody2D
     [ExportGroup("Camera")]
     [Export]
     private int offsetAmplify = 20;
+    [Export]
+    private int offsetSmoothing = 15;
 
     [ExportGroup("Rotation")]
     [Export]
@@ -30,7 +32,7 @@ public partial class Player : CharacterBody2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        HandleCamera();
+        HandleCamera(delta);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -39,7 +41,7 @@ public partial class Player : CharacterBody2D
         HandleMovement(delta);
     }
 
-    private void HandleCamera()
+    private void HandleCamera(double delta)
     {
         int windowWidth = (int)ProjectSettings.GetSetting("display/window/size/viewport_width");
         int windowHeight = (int)ProjectSettings.GetSetting("display/window/size/viewport_height");
@@ -48,8 +50,9 @@ public partial class Player : CharacterBody2D
         float horizontalOffset = (mousePos.X - GlobalPosition.X) / (windowWidth / 2);
         float verticalOffset = (mousePos.Y - GlobalPosition.Y) / (windowHeight / 2);
 
-        Camera.Offset = new Vector2(horizontalOffset, verticalOffset) * offsetAmplify;
-        GD.Print(Camera.Offset);
+        Vector2 targetOffset = new Vector2(horizontalOffset, verticalOffset) * offsetAmplify;
+
+        Camera.Offset = Camera.Offset.Lerp(targetOffset, offsetSmoothing * (float)delta);
     }
     
     private void HandleRotation(double delta)

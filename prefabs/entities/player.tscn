@@ -4,8 +4,8 @@
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera")]
 script = ExtResource("1_i2by2")
-offsetAmplify = 30
-playerSpeed = 500
+offsetAmplify = 50
+playerSpeed = 300
 playerAccel = 10
 Camera = NodePath("Camera2D")
 
@@ -16,7 +16,3 @@ polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24
 polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0, -16, -16)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_horizontal_offset = 1.0
-drag_vertical_offset = 1.0

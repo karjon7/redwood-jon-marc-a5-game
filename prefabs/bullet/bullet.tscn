@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://b2opm14owue2j"]
+[gd_scene load_steps=2 format=3 uid="uid://b2opm14owue2j"]
+
+[ext_resource type="Script" path="res://scripts/Bullet.cs" id="1_t8bmq"]
 
 [node name="Bullet" type="Node2D"]
+script = ExtResource("1_t8bmq")
+collideWith = 5
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(0, 0, -8, -8, -24, 0, -8, 8)

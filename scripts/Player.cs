@@ -52,8 +52,8 @@ public partial class Player : CharacterBody2D
 
     private void HandleCamera(double delta)
     {
-        int windowWidth = (int)ProjectSettings.GetSetting("display/window/size/viewport_width");
-        int windowHeight = (int)ProjectSettings.GetSetting("display/window/size/viewport_height");
+        int windowWidth = DisplayServer.ScreenGetSize().X;
+        int windowHeight = DisplayServer.ScreenGetSize().Y;
         Vector2 mousePos = GetGlobalMousePosition();
 
         float horizontalOffset = (mousePos.X - GlobalPosition.X) / (windowWidth / 2);

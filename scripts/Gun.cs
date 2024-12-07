@@ -43,7 +43,7 @@ public partial class Gun : Node2D
     private PackedScene bulletScene;
 
     public const int MaxBulletDamage = 100;
-    public const float MaxBulletSpeed = 1000f;
+    public const float MaxBulletSpeed = 2000f;
 
     public const int MaxMaxAmmo = 100;
     public const float MinReloadSpeed = 0.05f;

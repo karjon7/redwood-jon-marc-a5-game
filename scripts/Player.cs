@@ -46,7 +46,8 @@ public partial class Player : CharacterBody2D
 
     private void HandleShooting()
     {
-        if (Input.IsActionJustPressed("primary_fire")) Gun.Shoot();
+        if (!Gun.IsAuto && Input.IsActionJustPressed("primary_fire")) Gun.Shoot(); // Semi Auto
+        if (Gun.IsAuto && Input.IsActionPressed("primary_fire")) Gun.Shoot(); // Auto
     }
 
     private void HandleCamera(double delta)

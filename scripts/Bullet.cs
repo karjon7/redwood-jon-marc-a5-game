@@ -4,13 +4,14 @@ using System;
 
 public partial class Bullet : Node2D
 {	
-	[Export]
-	public float BulletSpeed = 20f;
-	[Export]
-	public int BulletDamage = 1;
-	[Export]
+	public int Damage = 1;
+	public int PiercesLeft = 0;
+	public int RicochetsLeft = 0;
+    public float Speed = 20f;
+
+    [Export]
 	public int MaxDistance = 2000;
-	public Vector2 BulletDirection = Vector2.Right;
+	public Vector2 Direction = Vector2.Right;
 
     [Export(PropertyHint.Layers2DPhysics)]
     private uint collideWith;
@@ -26,11 +27,11 @@ public partial class Bullet : Node2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+	public override void _Process(double delta)
 	{
 		// Calculate and move bullet to new position
-		float newPosX = GlobalPosition.X + (BulletDirection.X * BulletSpeed * (float)delta);
-		float newPosY = GlobalPosition.Y + (BulletDirection.Y * BulletSpeed * (float)delta);
+		float newPosX = GlobalPosition.X + (Direction.X * Speed * (float)delta);
+		float newPosY = GlobalPosition.Y + (Direction.Y * Speed * (float)delta);
 
 		Vector2 newPos = new Vector2(newPosX, newPosY);
 
@@ -45,7 +46,7 @@ public partial class Bullet : Node2D
 
             if (resultCollider.IsInGroup("Enemy")) // Raycast hit an Enemy, damage Enemy and destroy bullet
 			{
-				if (resultCollider.HasMethod("Damage")) resultCollider.Call("Damage", BulletDamage);
+				if (resultCollider.HasMethod("Damage")) resultCollider.Call("Damage", Damage);
 				Destroy();
 			}
 			else // Raycast hit terrain, move bullet to collision (for hit particles if have time) and destroy bullet
@@ -69,7 +70,7 @@ public partial class Bullet : Node2D
 
 	public void LookAtBulletDirection()
 	{
-        LookAt(GlobalPosition + BulletDirection);
+        LookAt(GlobalPosition + Direction);
 
     }
 

@@ -42,7 +42,8 @@ public partial class Bullet : Node2D
 		if (result.Count > 0) // Raycast hit something
 		{
 			Node resultCollider = (Node)result["collider"];
-			Vector2 resultPosition = (Vector2)result["position"];
+			Vector2 resultNormal = (Vector2)result["normal"];
+            Vector2 resultPosition = (Vector2)result["position"];
 
             if (resultCollider.IsInGroup("Enemy")) // Raycast hit an Enemy, damage Enemy and destroy bullet
 			{
@@ -51,8 +52,15 @@ public partial class Bullet : Node2D
 			}
 			else // Raycast hit terrain, move bullet to collision (for hit particles if have time) and destroy bullet
 			{
-				newPos = resultPosition;
-				Destroy();
+                newPos = resultPosition;
+
+				// If the Bullet can't ricochet anymore, delete
+                if (RicochetsLeft <= 0) Destroy();
+
+				// Bounce Bullet based on collision normal
+				Direction = Direction.Bounce(resultNormal);
+				LookAtBulletDirection();
+				RicochetsLeft--;
             }
 		}
 

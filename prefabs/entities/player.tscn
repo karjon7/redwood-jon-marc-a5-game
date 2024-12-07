@@ -24,6 +24,7 @@ polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24
 [node name="Gun" type="Node2D" parent="." node_paths=PackedStringArray("ReloadTimer", "fireRateTimer")]
 position = Vector2(32, 0)
 script = ExtResource("2_fywo8")
+BulletRicochetsLeft = 2
 ReloadTimer = NodePath("ReloadTimer")
 fireRateTimer = NodePath("FireRateTimer")
 bulletScene = ExtResource("2_sn6ju")

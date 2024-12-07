@@ -23,3 +23,25 @@ polygon = PackedVector2Array(128, 64, 320, 64, 320, 128, 192, 256, 128, 256)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
 polygon = PackedVector2Array(128, 64, 320, 64, 320, 128, 192, 256, 128, 256)
+
+[node name="TestEnemy" type="StaticBody2D" parent="." groups=["Enemy"]]
+position = Vector2(240, -32)
+collision_layer = 4
+
+[node name="Polygon2D" type="Polygon2D" parent="TestEnemy"]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(144, 160, 208, 160, 208, 224, 144, 224)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TestEnemy"]
+polygon = PackedVector2Array(144, 160, 208, 160, 208, 224, 144, 224)
+
+[node name="TestEnemy2" type="StaticBody2D" parent="." groups=["Enemy"]]
+position = Vector2(240, -144)
+collision_layer = 4
+
+[node name="Polygon2D" type="Polygon2D" parent="TestEnemy2"]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(144, 160, 208, 160, 208, 224, 144, 224)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TestEnemy2"]
+polygon = PackedVector2Array(144, 160, 208, 160, 208, 224, 144, 224)

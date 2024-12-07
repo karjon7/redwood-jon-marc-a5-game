@@ -41,16 +41,26 @@ public partial class Bullet : Node2D
 
 		if (result.Count > 0) // Raycast hit something
 		{
+			// Extract nessecary info
 			Node resultCollider = (Node)result["collider"];
 			Vector2 resultNormal = (Vector2)result["normal"];
             Vector2 resultPosition = (Vector2)result["position"];
 
-            if (resultCollider.IsInGroup("Enemy")) // Raycast hit an Enemy, damage Enemy and destroy bullet
+            if (resultCollider.IsInGroup("Enemy")) // Raycast hit an Enemy, pierce and damage Enemy and destroy Bullet
 			{
+				// If there is a damage method, damage collider
 				if (resultCollider.HasMethod("Damage")) resultCollider.Call("Damage", Damage);
-				Destroy();
+
+				// If the bullet can't pierce anymore, delete
+				if (PiercesLeft <= 0)
+				{
+					newPos = resultPosition;
+                    Destroy();
+				}
+				
+				PiercesLeft--;
 			}
-			else // Raycast hit terrain, move bullet to collision (for hit particles if have time) and destroy bullet
+			else // Raycast hit terrain, bounce or move Bullet to collision (for hit particles if have time) and destroy Bullet
 			{
                 newPos = resultPosition;
 
@@ -78,7 +88,8 @@ public partial class Bullet : Node2D
 
 	public void LookAtBulletDirection()
 	{
-        LookAt(GlobalPosition + Direction);
+        // Get where the bullet is looking at face bullet to that direction
+		LookAt(GlobalPosition + Direction);
 
     }
 

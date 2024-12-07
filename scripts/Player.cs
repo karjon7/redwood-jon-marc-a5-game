@@ -20,9 +20,13 @@ public partial class Player : CharacterBody2D
     [Export]
     private int playerAccel = 15;
 
-    [ExportGroup("Required Nodes")]
+    [ExportGroup("Required")]
     [Export]
     public Camera2D Camera;
+    [Export]
+    public Node2D BulletHolder;
+    [Export]
+    private PackedScene bulletScene;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -37,8 +41,31 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        HandleShooting();
         HandleRotation(delta);
         HandleMovement(delta);
+    }
+
+    private void Shoot()
+    {
+        if (bulletScene == null) // No Bullet scene
+        { 
+            GD.PrintErr("No Bullet scene assigned"); 
+            return;
+        }
+
+        Bullet bulletInstance = (Bullet)bulletScene.Instantiate();
+
+        bulletInstance.GlobalPosition = BulletHolder.GlobalPosition;
+        bulletInstance.BulletDirection = (Vector2.Right).Rotated(GlobalRotation);
+        bulletInstance.LookAtBulletDirection();
+
+        BulletHolder.AddChild(bulletInstance);
+    }
+
+    private void HandleShooting()
+    {
+        if (Input.IsActionJustPressed("primary_fire")) Shoot();
     }
 
     private void HandleCamera(double delta)

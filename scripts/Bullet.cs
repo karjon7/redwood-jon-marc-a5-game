@@ -21,6 +21,7 @@ public partial class Bullet : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+		TopLevel = true;
 		prevPos = GlobalPosition;
 	}
 
@@ -51,23 +52,30 @@ public partial class Bullet : Node2D
 			{
 				newPos = resultPosition;
 				Destroy();
-			}
+            }
 		}
 
         // Add distance travelled and destroy if gone too far
         distanceTravelled += prevPos.DistanceTo(newPos);
         if (distanceTravelled >= MaxDistance) Destroy();
 
-        // Move bullet
+        // Move and rotate bullet
         GlobalPosition = newPos;
+		LookAtBulletDirection();
 		
 		// Next frame information
         prevPos = newPos;
     }
 
+	public void LookAtBulletDirection()
+	{
+        LookAt(GlobalPosition + BulletDirection);
+
+    }
+
     public void Destroy()
 	{
 		QueueFree();
-	}
+    }
 
 }

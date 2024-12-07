@@ -1,19 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://cukoxugph2cxr"]
+[gd_scene load_steps=3 format=3 uid="uid://cukoxugph2cxr"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_i2by2"]
+[ext_resource type="PackedScene" uid="uid://b2opm14owue2j" path="res://prefabs/bullet/bullet.tscn" id="2_sn6ju"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "BulletHolder")]
 collision_layer = 2
 script = ExtResource("1_i2by2")
 offsetAmplify = 50
 playerSpeed = 300
 playerAccel = 10
 Camera = NodePath("Camera2D")
+BulletHolder = NodePath("BulletContainer")
+bulletScene = ExtResource("2_sn6ju")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0, -16, -16)
+polygon = PackedVector2Array(0, -24, 16, -16, 24, -8, 32, -8, 32, 8, 24, 8, 16, 16, 0, 24, -16, 16, -24, 0, -16, -16)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0, -16, -16)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BulletContainer" type="Node2D" parent="."]
+position = Vector2(32, 0)

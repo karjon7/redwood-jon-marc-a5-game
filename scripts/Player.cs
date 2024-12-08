@@ -32,17 +32,17 @@ public partial class Player : CharacterBody2D
     [Export]
     public Gun Gun;
 
+    [ExportSubgroup("UI")]
+    [Export]
+    private Label healthLabel;
+    [Export]
+    private Label ammoLabel;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
         Health = MaxHealth; // Initialize with max health
 	}
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-        HandleCamera(delta);
-    }
 
     public override void _Input(InputEvent @event)
     {
@@ -50,6 +50,13 @@ public partial class Player : CharacterBody2D
         {
             Gun.Reload();
         }
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+        HandleUI();
+        HandleCamera(delta);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -136,4 +143,16 @@ public partial class Player : CharacterBody2D
         Velocity = new Vector2(velocityX, velocityY);
         MoveAndSlide();
     }
+
+    private void HandleUI()
+    {
+        HandleHUD();
+    }
+
+    private void HandleHUD()
+    {
+        healthLabel.SetText($"Health: {GetHealthState()}");
+        ammoLabel.SetText(Gun.ReloadTimer.TimeLeft == 0 ? $"Ammo: {Gun.CurrentAmmo} / {Gun.MaxAmmo}" : "Reloading");
+    }
+
 }

@@ -4,6 +4,11 @@ using System.Diagnostics;
 
 public partial class Player : CharacterBody2D
 {
+    [Export]
+    public int Health = 10;
+    [Export]
+    public int MaxHealth = 10;
+
     [ExportGroup("Camera")]
     [Export]
     private int offsetAmplify = 20;
@@ -29,6 +34,7 @@ public partial class Player : CharacterBody2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+        Health = MaxHealth; // Initialize with max health
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,6 +56,46 @@ public partial class Player : CharacterBody2D
         HandleShooting();
         HandleRotation(delta);
         HandleMovement(delta);
+    }
+
+    public string GetHealthState()
+    {
+        // Get health percantage and get corrisponding health state
+        
+        float healthPercentage = (float)Health / (float)MaxHealth;
+
+        if (healthPercentage < 0.2) return "Critical";
+        else if (healthPercentage < 0.4) return "Weakened";
+        else if (healthPercentage < 0.6) return "Hurt";
+        else if (healthPercentage < 0.8) return "Stable";
+        else return "Optimal";
+    }
+
+    public void Heal(int amount)
+    {
+        // Add amount and ensure never goes above max health
+        Health += amount;
+        Health = Mathf.Min(Health, MaxHealth);
+
+        GD.Print(GetHealthState());
+    }
+
+    public void Damage(int amount)
+    {
+        // Subtract amount and ensure never goes below 0 (can't have negative health)
+        Health -= amount;
+        Health = Mathf.Max(Health, 0);
+
+        // If health is 0, kill player
+        if (Health == 0) Kill();
+
+        GD.Print(GetHealthState());
+    }
+
+    public void Kill()
+    {
+        // For now, when player dies, restart the scene
+        GetTree().ReloadCurrentScene();
     }
 
     private void HandleShooting()

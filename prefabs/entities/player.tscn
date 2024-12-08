@@ -6,6 +6,7 @@
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Gun")]
 collision_layer = 2
+motion_mode = 1
 script = ExtResource("1_i2by2")
 offsetAmplify = 50
 playerSpeed = 300
@@ -24,6 +25,7 @@ polygon = PackedVector2Array(0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24
 [node name="Gun" type="Node2D" parent="." node_paths=PackedStringArray("ReloadTimer", "fireRateTimer")]
 position = Vector2(32, 0)
 script = ExtResource("2_fywo8")
+BulletsPerMin = 100.0
 ReloadTimer = NodePath("ReloadTimer")
 fireRateTimer = NodePath("FireRateTimer")
 bulletScene = ExtResource("2_sn6ju")

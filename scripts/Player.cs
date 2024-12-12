@@ -4,6 +4,14 @@ using System.Diagnostics;
 
 public partial class Player : CharacterBody2D
 {
+    [ExportGroup("Upgrades")]
+    [Export]
+    public int UpgradePoints = 0;
+    [Export] 
+    public int XP = 0;
+    [Export]
+    public int XPLevel = 1;
+
     [ExportGroup("Health")]
     [Export]
     public int Health = 10;
@@ -33,6 +41,10 @@ public partial class Player : CharacterBody2D
     public Gun Gun;
 
     [ExportSubgroup("UI")]
+    [Export]
+    private Label upgradePointsLabel;
+    [Export]
+    private ProgressBar xpProgressBar;
     [Export]
     private Label healthLabel;
     [Export]
@@ -64,6 +76,31 @@ public partial class Player : CharacterBody2D
         HandleShooting();
         HandleRotation(delta);
         HandleMovement(delta);
+    }
+
+    public void EnemyKilled(int value)
+    {
+        XP += value;
+        CheckLevelUp();
+
+    }
+
+    public int XPToLevelUp()
+    {
+        return XPLevel * 5;
+    }
+
+    private void CheckLevelUp()
+    {
+        int xpRequired = XPToLevelUp();
+
+        while (XP >= xpRequired)
+        {
+            XP -= xpRequired;
+            XPLevel++;
+            UpgradePoints++;
+            xpRequired = XPToLevelUp();
+        }
     }
 
     public string GetHealthState()
@@ -151,7 +188,14 @@ public partial class Player : CharacterBody2D
 
     private void HandleHUD()
     {
+        // Upgrades
+        upgradePointsLabel.SetText($"Upgrade Points: {UpgradePoints}");
+        xpProgressBar.Value = (float)XP / (float)XPToLevelUp();
+        
+        // Health
         healthLabel.SetText($"Health: {GetHealthState()}");
+        
+        // Ammo
         ammoLabel.SetText(Gun.ReloadTimer.TimeLeft == 0 ? $"Ammo: {Gun.CurrentAmmo} / {Gun.MaxAmmo}" : "Reloading");
     }
 

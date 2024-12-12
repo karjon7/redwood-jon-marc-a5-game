@@ -8,7 +8,7 @@
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 5
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Gun", "healthLabel", "ammoLabel")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Gun", "upgradePointsLabel", "xpProgressBar", "healthLabel", "ammoLabel")]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_i2by2")
@@ -17,6 +17,8 @@ playerSpeed = 300
 playerAccel = 10
 Camera = NodePath("Camera2D")
 Gun = NodePath("Gun")
+upgradePointsLabel = NodePath("UI/HUD/MarginContainer/VBoxContainer/VBoxContainer/UpgradePointsLabel")
+xpProgressBar = NodePath("UI/HUD/MarginContainer/VBoxContainer/VBoxContainer/XPProgressBar")
 healthLabel = NodePath("UI/HUD/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HealthLabel")
 ammoLabel = NodePath("UI/HUD/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/AmmoLabel")
 
@@ -83,7 +85,8 @@ text = "Upgrade Points: 0"
 [node name="XPProgressBar" type="ProgressBar" parent="UI/HUD/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(210, 20)
 layout_mode = 2
-value = 50.0
+max_value = 1.0
+value = 0.5
 show_percentage = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UI/HUD/MarginContainer/VBoxContainer"]

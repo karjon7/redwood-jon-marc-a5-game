@@ -3,17 +3,6 @@ using System;
 
 public partial class Gun : Node2D
 {
-    public enum Upgrades{
-        BulletDamage,
-        BulletPierce,
-        BulletRicochet,
-        BulletSpeed,
-        Automatic,
-        MaxAmmo,
-        ReloadSpeed,
-        BulletsPerMin,
-    }
-    
     [ExportGroup("Bullet")]
     [Export]
     public int BulletDamage = 1;
@@ -41,13 +30,6 @@ public partial class Gun : Node2D
     private Timer fireRateTimer; 
     [Export]
     private PackedScene bulletScene;
-
-    public const int MaxBulletDamage = 100;
-    public const float MaxBulletSpeed = 2000f;
-
-    public const int MaxMaxAmmo = 100;
-    public const float MinReloadSpeed = 0.05f;
-    public const float MaxBulletPerMin = 1000f;
 
     public int CurrentAmmo = 0;
 

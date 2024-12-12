@@ -1,9 +1,71 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 public partial class Player : CharacterBody2D
 {
+    /* 
+     * Upgrades 
+     * (i know this could of been way better if i used an upgrade class 
+     * but im already way too deep into this how it is 
+     * and i only got like 5 hours to hand it in
+     * so im just gonna roll with it)
+    */
+    public enum UpgradeType
+    {
+        MaxHealth,
+        BulletDamage,
+        BulletPierce,
+        BulletRicochet,
+        BulletSpeed,
+        Automatic,
+        MaxAmmo,
+        ReloadSpeed,
+        BulletsPerMin,
+    }
+
+    // Upgrade Weights
+    private Dictionary<UpgradeType, int> UpgradeWeights = new Dictionary<UpgradeType, int>
+    {
+        { UpgradeType.MaxHealth, 5 },
+        { UpgradeType.BulletDamage, 25 },
+        { UpgradeType.BulletPierce, 10 },
+        { UpgradeType.BulletRicochet, 10 },
+        { UpgradeType.BulletSpeed, 15 },
+        { UpgradeType.Automatic, 50 },
+        { UpgradeType.MaxAmmo, 15 },
+        { UpgradeType.ReloadSpeed, 10 },
+        { UpgradeType.BulletsPerMin, 20 },
+    };
+
+    // Upgrade Increments
+    private Dictionary<UpgradeType, float> UpgradeIncrements = new Dictionary<UpgradeType, float>
+    {
+        { UpgradeType.MaxHealth, 1f },
+        { UpgradeType.BulletDamage, 1f },
+        { UpgradeType.BulletPierce, 1f },
+        { UpgradeType.BulletRicochet, 1f },
+        { UpgradeType.BulletSpeed, 100f },
+        { UpgradeType.Automatic, 1f },
+        { UpgradeType.MaxAmmo, 5f },
+        { UpgradeType.ReloadSpeed, 0.25f },
+        { UpgradeType.BulletsPerMin, 10f },
+    };
+
+    // Upgrade Maxes
+    private Dictionary<UpgradeType, float> UpgradeMaxes = new Dictionary<UpgradeType, float>
+    {
+        { UpgradeType.BulletSpeed, 2000f },
+        { UpgradeType.MaxAmmo, 100f },
+        { UpgradeType.ReloadSpeed, 0.05f },
+        { UpgradeType.BulletsPerMin, 1000f },
+    };
+
+    [Export]
+    public bool canShoot = true;
+
     [ExportGroup("Upgrades")]
     [Export]
     public int UpgradePoints = 0;
@@ -11,6 +73,13 @@ public partial class Player : CharacterBody2D
     public int XP = 0;
     [Export]
     public int XPLevel = 1;
+
+    [Export]
+    private UpgradeType upgrade1;
+    [Export]
+    private UpgradeType upgrade2;
+    [Export]
+    private UpgradeType upgrade3;
 
     [ExportGroup("Health")]
     [Export]
@@ -42,6 +111,12 @@ public partial class Player : CharacterBody2D
 
     [ExportSubgroup("UI")]
     [Export]
+    private Button upgradeButton1;
+    [Export]
+    private Button upgradeButton2;
+    [Export]
+    private Button upgradeButton3;
+    [Export]
     private Label upgradePointsLabel;
     [Export]
     private ProgressBar xpProgressBar;
@@ -50,11 +125,15 @@ public partial class Player : CharacterBody2D
     [Export]
     private Label ammoLabel;
 
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
         Health = MaxHealth; // Initialize with max health
-	}
+
+        UpdateXPProgressBar(0.001f);
+        RollUpgrades();
+    }
 
     public override void _Input(InputEvent @event)
     {
@@ -62,6 +141,8 @@ public partial class Player : CharacterBody2D
         {
             Gun.Reload();
         }
+
+        if (Input.IsKeyPressed(Key.Enter)) RollUpgrades();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -78,14 +159,152 @@ public partial class Player : CharacterBody2D
         HandleMovement(delta);
     }
 
+    // Upgrades
+    public void RollUpgrades()
+    {
+        int loopAttempts = 0;
+        
+        // Loop runs forever unless all three upgrades are not maxed and no duplicates, or loop runs 100 times
+        while (true)
+        {
+            upgrade1 = GetRandomUpgrade();
+            upgrade2 = GetRandomUpgrade();
+            upgrade3 = GetRandomUpgrade();
+
+            if (!(IsUpgradeMax(upgrade1) || IsUpgradeMax(upgrade2) || IsUpgradeMax(upgrade3))
+                && upgrade1 != upgrade2 && upgrade2 != upgrade3 && upgrade3 != upgrade1) break;
+
+            if (loopAttempts >= 100) break;
+            
+            loopAttempts++;
+        }
+    }
+
+    public void UpgradeChosen(int upgradePos)
+    {
+        switch (upgradePos)
+        {
+            case 1:
+                Upgrade(upgrade1);
+                break;
+
+            case 2: 
+                Upgrade(upgrade2);
+                break;
+
+            case 3:
+                Upgrade(upgrade3);
+                break;
+        }
+    }
+
+    public void Upgrade(UpgradeType upgrade)
+    {
+        if (UpgradePoints < 1) return;
+
+        RollUpgrades();
+        UpgradePoints--;
+        
+        switch (upgrade)
+        {
+            case UpgradeType.MaxHealth:
+                MaxHealth += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.BulletDamage:
+                Gun.BulletDamage += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.BulletPierce:
+                Gun.BulletPiercesLeft += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.BulletRicochet:
+                Gun.BulletRicochetsLeft += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.BulletSpeed:
+                Gun.BulletSpeed += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.Automatic:
+                Gun.IsAuto = true;
+                break;
+
+            case UpgradeType.MaxAmmo:
+                Gun.MaxAmmo += (int)UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.ReloadSpeed:
+                Gun.ReloadSpeedSeconds -= UpgradeIncrements[upgrade];
+                break;
+
+            case UpgradeType.BulletsPerMin:
+                Gun.BulletsPerMin += (int)UpgradeIncrements[upgrade];
+                break;
+        }
+    }
+
+    private bool IsUpgradeMax(UpgradeType upgrade)
+    {
+        // If upgrade has a specified case in the switch statement, evaluate if values equal their maxes(or mins) and return result
+        // otherwise return false
+        switch (upgrade)
+        {
+            case UpgradeType.BulletSpeed:
+                return Gun.BulletSpeed >= (int)UpgradeMaxes[upgrade];
+
+            case UpgradeType.Automatic:
+                return Gun.IsAuto;
+
+            case UpgradeType.MaxAmmo:
+                return Gun.MaxAmmo >= (int)UpgradeMaxes[upgrade];
+
+            case UpgradeType.ReloadSpeed:
+                return Gun.ReloadSpeedSeconds <= UpgradeMaxes[upgrade];
+
+            case UpgradeType.BulletsPerMin:
+                return Gun.BulletsPerMin >= (int)UpgradeMaxes[upgrade];
+            
+            default: 
+                return false;
+        }
+    }
+
+    private UpgradeType GetRandomUpgrade()
+    {
+        // Calculate total weights of all upgrades
+        int totalWeight = 0;
+        foreach (int weight in UpgradeWeights.Values) totalWeight += weight;
+
+        // Get a random value and find corresponding upgrade
+        float randomValue = GD.Randf() * totalWeight;
+        int sumWeight = 0;
+        foreach (UpgradeType currentUpgrade in UpgradeWeights.Keys)
+        {
+            sumWeight += UpgradeWeights[currentUpgrade];
+            if (randomValue < sumWeight) return currentUpgrade;
+        }
+            
+        return UpgradeType.MaxHealth; // Fall back to a default upgrade if weights are invalid
+        
+    }
+
+    private string GetUpgradeText(UpgradeType upgrade)
+    {
+        if (upgrade == UpgradeType.Automatic) return "Automatic Gun";
+
+        string enumName = upgrade.ToString();
+        return $"Increase {enumName}";
+    }
+
+    // XP
     public void AddXP(int value)
     {
         XP += value;
         CheckLevelUp();
 
-        Tween tween = CreateTween();
-        tween.SetTrans(Tween.TransitionType.Quint).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(xpProgressBar, "value", (float)XP / (float)XPToLevelUp(), 0.75);
+        UpdateXPProgressBar();
     }
 
     public int XPToLevelUp()
@@ -106,6 +325,7 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    // Health
     public string GetHealthState()
     {
         // Get health percantage and get corrisponding health state
@@ -142,8 +362,11 @@ public partial class Player : CharacterBody2D
         GetTree().ReloadCurrentScene();
     }
 
+    // Inputs
     private void HandleShooting()
     {
+        if (!canShoot) return;
+        
         if (!Gun.IsAuto && Input.IsActionJustPressed("primary_fire")) Gun.Shoot(); // Semi Auto
         if (Gun.IsAuto && Input.IsActionPressed("primary_fire")) Gun.Shoot(); // Auto
     }
@@ -184,6 +407,8 @@ public partial class Player : CharacterBody2D
         MoveAndSlide();
     }
 
+
+    // UI
     private void HandleUI()
     {
         HandleHUD();
@@ -193,12 +418,57 @@ public partial class Player : CharacterBody2D
     {
         // Upgrades
         upgradePointsLabel.SetText($"Upgrade Points: {UpgradePoints}");
+
+        upgradeButton1.SetText(GetUpgradeText(upgrade1));
+        upgradeButton2.SetText(GetUpgradeText(upgrade2));
+        upgradeButton3.SetText(GetUpgradeText(upgrade3));
+
         
+        /// Ensure you cant but an upgrade if player has no points
+        if (UpgradePoints <= 0)
+        {
+            upgradeButton1.Disabled = true;
+            upgradeButton1.SetTooltipText("You need Upgrade Points");
+            upgradeButton2.Disabled = true;
+            upgradeButton2.SetTooltipText("You need Upgrade Points");
+            upgradeButton3.Disabled = true;
+            upgradeButton3.SetTooltipText("You need Upgrade Points");
+        }
+        else
+        {
+            /// Ensure you cant buy an upgrade thats maxed
+            upgradeButton1.Disabled = IsUpgradeMax(upgrade1);
+            upgradeButton2.Disabled = IsUpgradeMax(upgrade2);
+            upgradeButton3.Disabled = IsUpgradeMax(upgrade3);
+
+            upgradeButton1.SetTooltipText("");
+            upgradeButton2.SetTooltipText("");
+            upgradeButton3.SetTooltipText("");
+        }
+
         // Health
         healthLabel.SetText($"Health: {GetHealthState()}");
         
         // Ammo
-        ammoLabel.SetText(Gun.ReloadTimer.TimeLeft == 0 ? $"Ammo: {Gun.CurrentAmmo} / {Gun.MaxAmmo}" : "Reloading");
+        ammoLabel.SetText(Gun.ReloadTimer.TimeLeft == 0 ? $"Ammo: {Gun.CurrentAmmo} / {Gun.MaxAmmo}" : $"Reloading {Gun.ReloadTimer.TimeLeft:F2}");
     }
 
+    private void UpdateXPProgressBar(float tweenSpeed = 0.75f)
+    {
+        // Tween to smoothly update XP progress bar
+        Tween tween = CreateTween();
+        tween.SetTrans(Tween.TransitionType.Quint).SetEase(Tween.EaseType.Out);
+        tween.TweenProperty(xpProgressBar, "value", (float)XP / (float)XPToLevelUp(), tweenSpeed);
+    }
+
+    // Following 2 functions prevent player from shooting when clicking on the upgrade buttons
+    private void ButtonHovered()
+    {
+        canShoot = false;
+    }
+
+    private void ButtonUnhovered()
+    {
+        canShoot = true;
+    }
 }

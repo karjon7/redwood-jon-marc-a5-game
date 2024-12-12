@@ -78,11 +78,14 @@ public partial class Player : CharacterBody2D
         HandleMovement(delta);
     }
 
-    public void EnemyKilled(int value)
+    public void AddXP(int value)
     {
         XP += value;
         CheckLevelUp();
 
+        Tween tween = CreateTween();
+        tween.SetTrans(Tween.TransitionType.Quint).SetEase(Tween.EaseType.Out);
+        tween.TweenProperty(xpProgressBar, "value", (float)XP / (float)XPToLevelUp(), 0.75);
     }
 
     public int XPToLevelUp()
@@ -190,7 +193,6 @@ public partial class Player : CharacterBody2D
     {
         // Upgrades
         upgradePointsLabel.SetText($"Upgrade Points: {UpgradePoints}");
-        xpProgressBar.Value = (float)XP / (float)XPToLevelUp();
         
         // Health
         healthLabel.SetText($"Health: {GetHealthState()}");

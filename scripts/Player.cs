@@ -144,8 +144,6 @@ public partial class Player : CharacterBody2D
         {
             Gun.Reload();
         }
-
-        if (Input.IsKeyPressed(Key.Enter)) Damage(1);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -347,7 +345,6 @@ public partial class Player : CharacterBody2D
         // Add amount and ensure never goes above max health
         Health += amount;
         Health = Mathf.Min(Health, MaxHealth);
-        GD.Print($"Player healed to {Health} health");
     }
 
     public void Damage(int amount)

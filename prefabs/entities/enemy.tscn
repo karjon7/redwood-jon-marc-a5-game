@@ -1,11 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmcv1xpxdrj6g"]
+[gd_scene load_steps=3 format=3 uid="uid://cmcv1xpxdrj6g"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_24d6h"]
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent") groups=["Enemy"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_05rk2"]
+radius = 24.0
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent", "hurtArea", "hurtTimer") groups=["Enemy"]]
 collision_layer = 4
 script = ExtResource("1_24d6h")
 navAgent = NodePath("NavigationAgent2D")
+hurtArea = NodePath("Area2D")
+hurtTimer = NodePath("HurtTimer")
 speed = 200
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
@@ -21,8 +26,21 @@ path_max_distance = 500.0
 radius = 24.0
 max_speed = 1000.0
 
+[node name="HurtTimer" type="Timer" parent="."]
+autostart = true
+
 [node name="PlayerSearchTimer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
 
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(24, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_05rk2")
+
+[connection signal="timeout" from="HurtTimer" to="." method="HurtPlayer"]
 [connection signal="timeout" from="PlayerSearchTimer" to="." method="TargertPlayer"]
+[connection signal="body_entered" from="Area2D" to="." method="HurtPlayer"]

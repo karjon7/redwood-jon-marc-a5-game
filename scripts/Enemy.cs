@@ -7,6 +7,10 @@ public partial class Enemy : CharacterBody2D
 
     [Export]
     private NavigationAgent2D navAgent;
+    [Export]
+    private Area2D hurtArea;
+    [Export]
+    private Timer hurtTimer;
 
     [Export]
     public int Health = 10;
@@ -28,6 +32,15 @@ public partial class Enemy : CharacterBody2D
     {
         if (!navAgent.IsTargetReached()) LookAt(navAgent.GetNextPathPosition());
         HandleMovement(delta);
+    }
+
+    public void HurtPlayer()
+    {
+        if (hurtArea.GetOverlappingBodies().Contains(player))
+        {
+            player.Damage(1);
+            hurtTimer.Start();
+        }
     }
 
     public void Damage(int amount)

@@ -28,6 +28,7 @@ project/assembly_name="Assignment 5"
 [global_group]
 
 Enemy=""
+Player=""
 
 [input]
 

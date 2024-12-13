@@ -3,9 +3,13 @@ using System;
 
 public partial class Enemy : CharacterBody2D
 {
+    Player player;
 
     [Export]
     private NavigationAgent2D navAgent;
+
+    [Export]
+    public int Health = 10;
 
     [Export]
     private int speed = 250;
@@ -15,14 +19,38 @@ public partial class Enemy : CharacterBody2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        SetNavTargetPosition(Vector2.Zero);
+        player = (Player)GetTree().GetFirstNodeInGroup("Player");
+        TargertPlayer();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        if (!navAgent.IsTargetReached()) LookAt(Velocity);
+        if (!navAgent.IsTargetReached()) LookAt(navAgent.GetNextPathPosition());
         HandleMovement(delta);
+    }
+
+    public void Damage(int amount)
+    {
+        // Subtract amount and ensure never goes below 0 (can't have negative health)
+        Health -= amount;
+        Health = Mathf.Max(Health, 0);
+
+        // If health is 0, kill enemy
+        if (Health == 0) Kill();
+    }
+
+    public void Kill()
+    {
+        // When enemy dies, give player XP
+        Player player = (Player)GetTree().GetFirstNodeInGroup("Player");
+        player.AddXP(3);
+        QueueFree();
+    }
+
+    public void TargertPlayer()
+    {
+        SetNavTargetPosition(player.GlobalPosition);
     }
 
     public void SetNavTargetPosition(Vector2 targetPos) 

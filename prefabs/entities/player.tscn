@@ -11,7 +11,7 @@ Button/font_sizes/font_size = 14
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 5
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("healthTimer", "Camera", "Gun", "upgradeButton1", "upgradeButton2", "upgradeButton3", "upgradePointsLabel", "xpProgressBar", "healthLabel", "ammoLabel")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("healthTimer", "Camera", "Gun", "upgradeButton1", "upgradeButton2", "upgradeButton3", "upgradePointsLabel", "xpProgressBar", "healthLabel", "ammoLabel") groups=["Player"]]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_i2by2")

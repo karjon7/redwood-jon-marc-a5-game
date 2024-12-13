@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
 {
@@ -105,6 +106,8 @@ public partial class Player : CharacterBody2D
 
     [ExportGroup("Required")]
     [Export]
+    private Timer healthTimer;
+    [Export]
     public Camera2D Camera;
     [Export]
     public Gun Gun;
@@ -142,7 +145,7 @@ public partial class Player : CharacterBody2D
             Gun.Reload();
         }
 
-        if (Input.IsKeyPressed(Key.Enter)) RollUpgrades();
+        if (Input.IsKeyPressed(Key.Enter)) Damage(1);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -344,6 +347,7 @@ public partial class Player : CharacterBody2D
         // Add amount and ensure never goes above max health
         Health += amount;
         Health = Mathf.Min(Health, MaxHealth);
+        GD.Print($"Player healed to {Health} health");
     }
 
     public void Damage(int amount)
@@ -351,6 +355,9 @@ public partial class Player : CharacterBody2D
         // Subtract amount and ensure never goes below 0 (can't have negative health)
         Health -= amount;
         Health = Mathf.Max(Health, 0);
+
+        // Start regen timer
+        healthTimer.Start(3);
 
         // If health is 0, kill player
         if (Health == 0) Kill();

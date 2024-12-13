@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfc037bqs4vhv"]
+[gd_scene load_steps=4 format=3 uid="uid://dfc037bqs4vhv"]
 
 [ext_resource type="PackedScene" uid="uid://cukoxugph2cxr" path="res://prefabs/entities/player.tscn" id="1_v1b1t"]
+[ext_resource type="PackedScene" uid="uid://cmcv1xpxdrj6g" path="res://prefabs/entities/enemy.tscn" id="2_og6s3"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_35v88"]
 vertices = PackedVector2Array(728, 225.938, 728, 128, 976, 24, 976, 976, 585.938, 368, 24, 976, 488, 368, 344, 137.938, 344, 40, 488, 128, 201.938, 280, 104, 280, 24, 24, 104, 40)
@@ -55,3 +56,6 @@ polygon = PackedVector2Array(128, 64, 320, 64, 320, 128, 192, 256, 128, 256)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D2"]
 polygon = PackedVector2Array(128, 64, 320, 64, 320, 128, 192, 256, 128, 256)
+
+[node name="Enemy" parent="NavigationRegion2D" instance=ExtResource("2_og6s3")]
+position = Vector2(1000, 1000)

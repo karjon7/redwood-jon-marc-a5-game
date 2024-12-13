@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://do4pm4yekq4d8"]
-
-[ext_resource type="PackedScene" uid="uid://cukoxugph2cxr" path="res://prefabs/entities/player.tscn" id="1_agr4t"]
+[gd_scene load_steps=2 format=3 uid="uid://do4pm4yekq4d8"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uopks"]
-vertices = PackedVector2Array(560, 172.117, 435.883, 48, 2952, 48, 2952, 2952, 560, 368, 48, 2952, 364.117, 368, 48, 48, 144, 48, 144, 147.883)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3, 4), PackedInt32Array(4, 3, 5, 6), PackedInt32Array(5, 7, 8, 9), PackedInt32Array(5, 9, 6)])
+vertices = PackedVector2Array(1724, 2309.94, 2290.06, 2224, 2509.94, 2224, 2209.94, 2576, 1990.06, 2576, 1509.94, 2524, 2976, 1357.94, 2976, 2976, 2724, 2009.94, 2724, 1790.06, 2909.94, 1424, 1690.06, 2676, 1476, 2890.06, 1324, 2809.94, 1324, 2690.06, 2309.94, 824, 2424, 709.938, 2776, 688, 2376, 988, 2009.94, 1176, 1509.94, 1876, 1524, 1609.94, 1776, 1290.06, 1776, 1809.94, 1724, 2090.06, 1524, 1290.06, 1990.06, 1924, 1890.06, 1924, 2909.94, 2976, 2709.94, 2776, 2490.06, 1424, 2609.94, 1676, 2376, 1309.94, 2209.94, 1676, 2124, 1590.06, 2124, 1290.06, 2409.94, 2776, 2424, 190.063, 2776, 390.063, 824, 509.938, 824, 290.063, 1076, 290.063, 1076, 509.938, 1024, 683.961, 994.367, 671.688, 1409.94, 1724, 1190.06, 1876, 1090.06, 1724, 1890.06, 2676, 1290.06, 2524, 1209.94, 2576, 909.938, 2324, 1090.06, 2324, 990.063, 2576, 809.938, 2424, 890.063, 2676, 709.938, 2676, 609.938, 2576, 290.063, 2424, 190.063, 2576, 1490.06, 824, 1890.06, 1176, 1309.94, 1076, 1290.06, 624, 1109.94, 1076, 1024, 990.063, 1190.06, 624, 709.938, 624, 890.063, 776, 690.063, 776, 509.938, 624, 566.063, 900, 424, 709.938, 424, 1090.06, 724, 1390.06, 976, 1309.94, 976, 1609.94, 724, 1509.94, 1090.06, 1976, 909.938, 1976, 709.938, 1776, 609.938, 1624, 376, 1776, 490.063, 1624, 176, 1309.94, 176, 2309.94, 2976, 24, 2976, 190.063, 2309.94, 76, 1209.94, 2924, 1476, 2976, 24, 2976, 190.063, 2924, 76, 2809.94, 24, 24, 76, 2690.06, 176, 2090.06, 2190.06, 76, 2076, 190.063, 1200, 166.063, 2076, 390.063, 1990.06, 476, 1409.94, 476, 1324, 390.063, 1324, 290.063, 709.938, 176, 290.063, 176, 176, 290.063, 376, 1890.06)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9, 10), PackedInt32Array(11, 12, 13, 14, 5), PackedInt32Array(15, 16, 17, 18, 19), PackedInt32Array(20, 21, 22, 23, 24), PackedInt32Array(22, 21, 25), PackedInt32Array(26, 1, 0, 24, 27), PackedInt32Array(2, 8, 7, 28, 29), PackedInt32Array(30, 10, 9, 31), PackedInt32Array(32, 30, 31, 33, 34, 35), PackedInt32Array(2, 29, 36, 3), PackedInt32Array(17, 16, 37, 38), PackedInt32Array(18, 32, 35, 19), PackedInt32Array(39, 40, 41, 42, 43, 44), PackedInt32Array(23, 27, 24), PackedInt32Array(45, 21, 20), PackedInt32Array(45, 20, 46, 47), PackedInt32Array(5, 4, 48, 11), PackedInt32Array(49, 5, 14, 50), PackedInt32Array(51, 52, 49, 50, 53, 54), PackedInt32Array(54, 53, 55, 56, 57), PackedInt32Array(58, 54, 57, 59), PackedInt32Array(60, 15, 19, 61), PackedInt32Array(60, 61, 22, 25, 62), PackedInt32Array(63, 60, 62, 64, 65, 43, 66), PackedInt32Array(42, 66, 43), PackedInt32Array(67, 39, 44, 68, 69), PackedInt32Array(70, 67, 69, 71, 72), PackedInt32Array(73, 72, 71), PackedInt32Array(74, 73, 71, 75, 76), PackedInt32Array(77, 74, 76), PackedInt32Array(77, 76, 47, 46, 78, 79, 80, 81), PackedInt32Array(81, 80, 82, 83), PackedInt32Array(84, 83, 82), PackedInt32Array(85, 58, 59), PackedInt32Array(86, 87, 38, 37, 88), PackedInt32Array(89, 13, 12, 90), PackedInt32Array(89, 90, 91, 92), PackedInt32Array(93, 92, 91), PackedInt32Array(93, 91, 94, 95), PackedInt32Array(59, 95, 94, 85), PackedInt32Array(96, 85, 94), PackedInt32Array(94, 86, 88, 97), PackedInt32Array(94, 97, 98, 99), PackedInt32Array(98, 100, 101, 102, 103, 104), PackedInt32Array(98, 104, 99), PackedInt32Array(99, 41, 40, 105), PackedInt32Array(94, 99, 105, 106), PackedInt32Array(94, 106, 107), PackedInt32Array(82, 108, 96, 84), PackedInt32Array(84, 96, 94), PackedInt32Array(94, 107, 84)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(3000, 3000, 3000, 0, 0, 0, 0, 3000)])
 parsed_geometry_type = 1
-agent_radius = 48.0
+agent_radius = 24.0
 
 [node name="Game" type="Node"]
 
@@ -83,5 +81,96 @@ polygon = PackedVector2Array(3000, 200, 2800, 400, 2800, 700, 2400, 1000, 2400, 
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
 polygon = PackedVector2Array(1200, 200, 1100, 300, 1100, 500, 1200, 600, 1300, 600, 1500, 800, 2300, 800, 2400, 700, 2400, 200, 2300, 100, 2200, 100, 2100, 200, 2100, 400, 2000, 500, 1400, 500, 1300, 400, 1300, 300)
 
-[node name="Player" parent="NavigationRegion2D" instance=ExtResource("1_agr4t")]
-position = Vector2(1600, 1000)
+[node name="EnemyHolder" type="Node2D" parent="NavigationRegion2D"]
+
+[node name="SpawnPoints" type="Node2D" parent="NavigationRegion2D"]
+
+[node name="Marker2D" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(118, 138)
+
+[node name="Marker2D2" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(929, 125)
+
+[node name="Marker2D3" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1497, 347)
+
+[node name="Marker2D4" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1931, 360)
+
+[node name="Marker2D5" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2816, 128)
+
+[node name="Marker2D6" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2628, 407)
+
+[node name="Marker2D7" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2231, 1012)
+
+[node name="Marker2D8" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1646, 1042)
+
+[node name="Marker2D9" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1236, 847)
+
+[node name="Marker2D10" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(960, 544)
+
+[node name="Marker2D11" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(566, 746)
+
+[node name="Marker2D12" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(690, 1177)
+
+[node name="Marker2D13" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(831, 1645)
+
+[node name="Marker2D14" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(996, 1820)
+
+[node name="Marker2D15" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(280, 1585)
+
+[node name="Marker2D16" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(199, 1844)
+
+[node name="Marker2D17" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1632, 1767)
+
+[node name="Marker2D18" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1659, 1461)
+
+[node name="Marker2D19" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2305, 1508)
+
+[node name="Marker2D20" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2840, 1582)
+
+[node name="Marker2D21" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2850, 1895)
+
+[node name="Marker2D22" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2863, 2373)
+
+[node name="Marker2D23" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2893, 2773)
+
+[node name="Marker2D24" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2496, 2632)
+
+[node name="Marker2D25" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2425, 2376)
+
+[node name="Marker2D26" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(2015, 2282)
+
+[node name="Marker2D27" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1625, 2598)
+
+[node name="Marker2D28" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(1036, 2433)
+
+[node name="Marker2D29" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(817, 2594)
+
+[node name="Marker2D30" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
+position = Vector2(148, 2470)

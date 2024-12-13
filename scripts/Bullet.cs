@@ -37,6 +37,7 @@ public partial class Bullet : Node2D
 
         // Raycast to bullet new position and get result
         PhysicsRayQueryParameters2D query = PhysicsRayQueryParameters2D.Create(prevPos, newPos, collideWith);
+		query.HitFromInside = true;
 		Dictionary result = GetWorld2D().DirectSpaceState.IntersectRay(query);
 
 		if (result.Count > 0) // Raycast hit something

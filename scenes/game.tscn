@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://do4pm4yekq4d8"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_uopks"]
+vertices = PackedVector2Array(560, 172.117, 435.883, 48, 1951.57, 48, 1944.42, 848, 560, 368, 48, 848, 364.117, 368, 48, 48, 144, 48, 144, 147.883)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3), PackedInt32Array(4, 3, 5, 6), PackedInt32Array(5, 7, 8, 9), PackedInt32Array(5, 9, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1992, 896, 2000, 0, 0, 0, 0, 896)])
+parsed_geometry_type = 1
+agent_radius = 48.0
+
+[node name="Game" type="Node"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_uopks")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="NavigationRegion2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
+polygon = PackedVector2Array(192, 0, 320, 0, 512, 192, 512, 320, 384, 320, 192, 128)

@@ -1,4 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://do4pm4yekq4d8"]
+[gd_scene load_steps=5 format=3 uid="uid://do4pm4yekq4d8"]
+
+[ext_resource type="Script" path="res://scripts/Game.cs" id="1_1mqcv"]
+[ext_resource type="PackedScene" uid="uid://cukoxugph2cxr" path="res://prefabs/entities/player.tscn" id="1_agr4t"]
+[ext_resource type="PackedScene" uid="uid://cmcv1xpxdrj6g" path="res://prefabs/entities/enemy.tscn" id="3_bbxcr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uopks"]
 vertices = PackedVector2Array(1724, 2309.94, 2290.06, 2224, 2509.94, 2224, 2209.94, 2576, 1990.06, 2576, 1509.94, 2524, 2976, 1357.94, 2976, 2976, 2724, 2009.94, 2724, 1790.06, 2909.94, 1424, 1690.06, 2676, 1476, 2890.06, 1324, 2809.94, 1324, 2690.06, 2309.94, 824, 2424, 709.938, 2776, 688, 2376, 988, 2009.94, 1176, 1509.94, 1876, 1524, 1609.94, 1776, 1290.06, 1776, 1809.94, 1724, 2090.06, 1524, 1290.06, 1990.06, 1924, 1890.06, 1924, 2909.94, 2976, 2709.94, 2776, 2490.06, 1424, 2609.94, 1676, 2376, 1309.94, 2209.94, 1676, 2124, 1590.06, 2124, 1290.06, 2409.94, 2776, 2424, 190.063, 2776, 390.063, 824, 509.938, 824, 290.063, 1076, 290.063, 1076, 509.938, 1024, 683.961, 994.367, 671.688, 1409.94, 1724, 1190.06, 1876, 1090.06, 1724, 1890.06, 2676, 1290.06, 2524, 1209.94, 2576, 909.938, 2324, 1090.06, 2324, 990.063, 2576, 809.938, 2424, 890.063, 2676, 709.938, 2676, 609.938, 2576, 290.063, 2424, 190.063, 2576, 1490.06, 824, 1890.06, 1176, 1309.94, 1076, 1290.06, 624, 1109.94, 1076, 1024, 990.063, 1190.06, 624, 709.938, 624, 890.063, 776, 690.063, 776, 509.938, 624, 566.063, 900, 424, 709.938, 424, 1090.06, 724, 1390.06, 976, 1309.94, 976, 1609.94, 724, 1509.94, 1090.06, 1976, 909.938, 1976, 709.938, 1776, 609.938, 1624, 376, 1776, 490.063, 1624, 176, 1309.94, 176, 2309.94, 2976, 24, 2976, 190.063, 2309.94, 76, 1209.94, 2924, 1476, 2976, 24, 2976, 190.063, 2924, 76, 2809.94, 24, 24, 76, 2690.06, 176, 2090.06, 2190.06, 76, 2076, 190.063, 1200, 166.063, 2076, 390.063, 1990.06, 476, 1409.94, 476, 1324, 390.063, 1324, 290.063, 709.938, 176, 290.063, 176, 176, 290.063, 376, 1890.06)
@@ -7,7 +11,11 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(3000, 3000, 3000, 0, 0,
 parsed_geometry_type = 1
 agent_radius = 24.0
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("SpawnPointsHolder")]
+script = ExtResource("1_1mqcv")
+SpawnPointsHolder = NodePath("NavigationRegion2D/SpawnPoints")
+playerScene = ExtResource("1_agr4t")
+enemyScene = ExtResource("3_bbxcr")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_uopks")
@@ -174,3 +182,9 @@ position = Vector2(817, 2594)
 
 [node name="Marker2D30" type="Marker2D" parent="NavigationRegion2D/SpawnPoints"]
 position = Vector2(148, 2470)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="SpawnEnemy"]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://do4pm4yekq4d8"]
+[gd_scene load_steps=3 format=3 uid="uid://do4pm4yekq4d8"]
+
+[ext_resource type="PackedScene" uid="uid://cukoxugph2cxr" path="res://prefabs/entities/player.tscn" id="1_agr4t"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uopks"]
-vertices = PackedVector2Array(560, 172.117, 435.883, 48, 1951.57, 48, 1944.42, 848, 560, 368, 48, 848, 364.117, 368, 48, 48, 144, 48, 144, 147.883)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3), PackedInt32Array(4, 3, 5, 6), PackedInt32Array(5, 7, 8, 9), PackedInt32Array(5, 9, 6)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(1992, 896, 2000, 0, 0, 0, 0, 896)])
+vertices = PackedVector2Array(560, 172.117, 435.883, 48, 2952, 48, 2952, 2952, 560, 368, 48, 2952, 364.117, 368, 48, 48, 144, 48, 144, 147.883)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3, 4), PackedInt32Array(4, 3, 5, 6), PackedInt32Array(5, 7, 8, 9), PackedInt32Array(5, 9, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(3000, 3000, 3000, 0, 0, 0, 0, 3000)])
 parsed_geometry_type = 1
 agent_radius = 48.0
 
@@ -12,7 +14,74 @@ agent_radius = 48.0
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_uopks")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="NavigationRegion2D"]
+[node name="Border" type="StaticBody2D" parent="NavigationRegion2D"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(192, 0, 320, 0, 512, 192, 512, 320, 384, 320, 192, 128)
+[node name="Polygon2D" type="Polygon2D" parent="NavigationRegion2D/Border"]
+invert_enabled = true
+invert_border = 1000.0
+polygon = PackedVector2Array(0, 0, 3000, 0, 3000, 3000, 0, 3000)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/Border"]
+polygon = PackedVector2Array(0, 0, -250, -250, 3250, -250, 3000, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="NavigationRegion2D/Border"]
+polygon = PackedVector2Array(0, 0, -250, -250, -250, 3250, 0, 3000)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="NavigationRegion2D/Border"]
+polygon = PackedVector2Array(0, 3000, -250, 3250, 3250, 3250, 3000, 3000)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="NavigationRegion2D/Border"]
+polygon = PackedVector2Array(3250, -250, 3000, 0, 3000, 3000, 3250, 3250)
+
+[node name="Terrain" type="StaticBody2D" parent="NavigationRegion2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(200, 300, 300, 200, 700, 200, 800, 300, 800, 500, 700, 600, 500, 600, 400, 700, 400, 1100, 700, 1400, 700, 1500, 600, 1600, 500, 1600, 200, 1300)
+
+[node name="Polygon2D2" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1000, 700, 900, 800, 700, 800, 600, 900, 1000, 1300, 1000, 1600, 1100, 1700, 1400, 1700, 1500, 1600, 1500, 1300, 1300, 1100, 1100, 1100, 1000, 1000)
+
+[node name="Polygon2D3" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(400, 1800, 700, 1800, 900, 2000, 1100, 2000, 1200, 1900, 1500, 1900, 1700, 2100, 1700, 2300, 1500, 2500, 1300, 2500, 1100, 2300, 900, 2300, 800, 2400, 300, 2400, 200, 2300, 200, 2100, 400, 1900)
+
+[node name="Polygon2D4" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(100, 2700, 100, 2800, 200, 2900, 1200, 2900, 1300, 2800, 1300, 2700, 1200, 2600, 1000, 2600, 900, 2700, 700, 2700, 600, 2600, 200, 2600)
+
+[node name="Polygon2D5" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1500, 2900, 1700, 2700, 1900, 2700, 2000, 2600, 2200, 2600, 2400, 2800, 2700, 2800, 2900, 3000, 1500, 3000)
+
+[node name="Polygon2D6" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(2100, 2000, 2300, 2200, 2500, 2200, 2700, 2000, 2700, 1800, 2600, 1700, 2200, 1700, 2100, 1600, 2100, 1300, 2000, 1200, 1900, 1200, 1800, 1300, 1800, 1800, 1900, 1900, 2000, 1900)
+
+[node name="Polygon2D7" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(2500, 1400, 2400, 1300, 2400, 1000, 2800, 700, 2800, 400, 3000, 200, 3000, 1300, 2900, 1400)
+
+[node name="Polygon2D8" type="Polygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1200, 200, 1100, 300, 1100, 500, 1200, 600, 1300, 600, 1500, 800, 2300, 800, 2400, 700, 2400, 200, 2300, 100, 2200, 100, 2100, 200, 2100, 400, 2000, 500, 1400, 500, 1300, 400, 1300, 300)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(300, 200, 200, 300, 200, 1300, 500, 1600, 600, 1600, 700, 1500, 700, 1400, 400, 1100, 400, 700, 500, 600, 700, 600, 800, 500, 800, 300, 700, 200)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1000, 700, 900, 800, 700, 800, 600, 900, 1000, 1300, 1000, 1600, 1100, 1700, 1400, 1700, 1500, 1600, 1500, 1300, 1300, 1100, 1100, 1100, 1000, 1000)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(400, 1800, 400, 1900, 200, 2100, 200, 2300, 300, 2400, 800, 2400, 900, 2300, 1100, 2300, 1300, 2500, 1500, 2500, 1700, 2300, 1700, 2100, 1500, 1900, 1200, 1900, 1100, 2000, 900, 2000, 700, 1800)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(200, 2600, 100, 2700, 100, 2800, 200, 2900, 1200, 2900, 1300, 2800, 1300, 2700, 1200, 2600, 1000, 2600, 900, 2700, 700, 2700, 600, 2600)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1500, 3000, 1500, 2900, 1700, 2700, 1900, 2700, 2000, 2600, 2200, 2600, 2400, 2800, 2700, 2800, 2900, 3000)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1900, 1200, 1800, 1300, 1800, 1800, 1900, 1900, 2000, 1900, 2300, 2200, 2500, 2200, 2700, 2000, 2700, 1800, 2600, 1700, 2200, 1700, 2100, 1600, 2100, 1300, 2000, 1200)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(3000, 200, 2800, 400, 2800, 700, 2400, 1000, 2400, 1300, 2500, 1400, 2900, 1400, 3000, 1300)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="NavigationRegion2D/Terrain"]
+polygon = PackedVector2Array(1200, 200, 1100, 300, 1100, 500, 1200, 600, 1300, 600, 1500, 800, 2300, 800, 2400, 700, 2400, 200, 2300, 100, 2200, 100, 2100, 200, 2100, 400, 2000, 500, 1400, 500, 1300, 400, 1300, 300)
+
+[node name="Player" parent="NavigationRegion2D" instance=ExtResource("1_agr4t")]
+position = Vector2(1600, 1000)
